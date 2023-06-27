@@ -12,44 +12,61 @@ app.post("/sign-up", (req, res) => {
   const { username, avatar } = req.body;
 
   if (!username || !avatar || typeof username !== "string" || typeof avatar !== "string") {
-    res.status(400).send("Todos os campos são obrigatórios!");
-    return;
+    return res.status(400).send("Todos os campos são obrigatórios!");
   } else {
     users.push({ username, avatar });
-    res.status(201).send("OK");
-    return;
+    return res.status(201).send("OK");
   }
 });
 
 app.post("/tweets", (req, res) => {
-  const { username, tweet } = req.body;
+  const { tweet } = req.body;
+  const { user } = req.headers;
 
-  if (users.find((user) => user.username === username)) {
-    if (!username || !tweet || typeof username !== "string" || typeof tweet !== "string") {
-      res.status(400).send("Todos os campos são obrigatórios!");
-      return;
+  if (users.find((u) => u.username === user)) {
+    if (!user || !tweet || typeof user !== "string" || typeof tweet !== "string") {
+      return res.status(400).send("Todos os campos são obrigatórios!");
     } else {
-      tweets.push({ username, tweet });
-      res.status(201).send("OK");
-      return;
+      tweets.push({ username: user, tweet });
+      return res.status(201).send("OK");
     }
   } else {
-    res.sendStatus(401);
-    return;
+    return res.sendStatus(401);
   }
 });
 
 app.get("/tweets", (req, res) => {
-  const lastTenTweets = tweets
-    .slice(-10)
-    .reverse()
-    .map(({ username, tweet }) => ({
-      username,
-      avatar: users.find((user) => user.username === username).avatar,
-      tweet,
-    }));
+  const page = Number(req.query.page);
 
-  res.send(lastTenTweets);
+  if (req.query.page && (isNaN(page) || page < 1)) {
+    return res.status(400).send("Informe uma página válida!");
+  }
+
+  const lastTweets = tweets.map((tweet) => {
+    const user = users.find((u) => u.username === tweet.username);
+    return { ...tweet, avatar: user.avatar };
+  });
+
+  if (page) {
+    const limit = 10;
+    const start = (page - 1) * limit;
+    const end = page * limit;
+
+    res.send(lastTweets.slice(start, end).reverse());
+  }
+});
+
+app.get("/tweets/:username", (req, res) => {
+  const { username } = req.params;
+
+  const filteredTweets = tweets
+    .filter((tweet) => tweet.username === username)
+    .map((tweet) => {
+      const user = users.find((user) => user.username === tweet.username);
+      return { ...tweet, avatar: user.avatar };
+    });
+
+  res.send(filteredTweets);
 });
 
 const PORT = 5000;
