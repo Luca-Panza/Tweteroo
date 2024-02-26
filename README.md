@@ -41,7 +41,7 @@ POST /tweets
     - headers: {}
     - body:{
     	"username": "Lorem ipsum",
-    	"tweet": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+    	"tweet": "Lorem Ipsum is simply dummy text of the printing."
     }
 ```
     
