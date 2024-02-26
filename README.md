@@ -6,14 +6,13 @@
 
 <p align = "center">
    <img src="https://img.shields.io/badge/author-Luca_Panza-4dae71?style=flat-square" />
-   <img src="https://img.shields.io/github/languages/count/Luca-Panza/projeto12-tweteroo?color=4dae71&style=flat-square" />
+   <img src="https://img.shields.io/github/languages/count/Luca-Panza/Tweteroo?color=4dae71&style=flat-square" />
 </p>
 
 
 ##  :clipboard: Description
 
-(Driven Bootcamp Project) This a back-end application that allows users to sign up, post tweets, and retrieve the last ten tweets.
-***
+"Tweteroo" is a simple backend project akin to Twitter, developed using Node.js and Express.js. It enables users to sign up, post tweets, and retrieve the latest ten tweets.
 
 ## :computer:	 Technologies and Concepts
 
@@ -24,7 +23,7 @@
 
 ***
 
-## :rocket: Rotas
+## :rocket: Endpoints
 
 ```yml
 POST /sign-up
@@ -62,7 +61,7 @@ Make sure you have the latest stable version of [Node.js](https://nodejs.org/en/
 First, clone this repository on your machine:
 
 ```
-git clone https://github.com/Luca-Panza/projeto12-tweteroo
+git clone https://github.com/Luca-Panza/Tweteroo
 ```
 
 Then, navigate to the project folder and install the dependencies with the following command:
@@ -72,6 +71,12 @@ npm install
 ```
 
 Once the process is finished, just start the server.
+
+```
+npm start
+```
+
+Or to test on a development server.
 
 ```
 npm run dev
